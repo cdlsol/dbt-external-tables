@@ -50,16 +50,12 @@
                         {{column_quoted}}
                     {%- endif -%}
                 {%- endset %}
-                {%- set col_expression -%}
-                    {%- set col_expression -%}
-                        {{ dbt_external_tables.snowflake__get_external_column_expression(
-                            column,
-                            loop.index,
-                            is_csv,
-                            ignore_case
-                        ) }}
-                    {%- endset %}
-                {%- endset %}
+                {%- set col_expression = dbt_external_tables.snowflake__get_external_column_expression(
+                    column,
+                    loop.index,
+                    is_csv,
+                    ignore_case
+                ) -%}
                 {{column_alias}} {{column.data_type}} as ({{col_expression}}::{{column.data_type}})
                 {{- ',' if not loop.last -}}
             {% endfor %}
